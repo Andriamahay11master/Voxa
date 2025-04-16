@@ -15,6 +15,9 @@ logs/
 client/node_modules/
 client/build/
 client/.env
+client/dist
+client/dist-ssr
+client/*.local
 
 # OS
 .DS_Store
@@ -22,6 +25,15 @@ Thumbs.db
 
 # VSCode
 .vscode/
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Misc
 *.local

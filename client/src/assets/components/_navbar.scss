@@ -1,0 +1,131 @@
+.navbar {
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: $spacing-md $spacing-xl;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include mobile {
+    padding: $spacing-sm $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $primary-color;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+  .navbar-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    @include tablet {
+      gap: 1rem;
+    }
+
+    .navbar-menu-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      @include tablet {
+        gap: 1rem;
+      }
+    }
+    .navbar-menu {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+
+      @include mobile {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: $white;
+        padding: 0.7rem;
+        box-shadow: 0px -5px 20px 20px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        justify-content: center;
+        gap: 2rem;
+        border-radius: 3rem 3rem 0 0;
+      }
+
+      .nav-item {
+        text-decoration: none;
+        color: $black;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        transition: color 0.3s ease;
+        white-space: nowrap;
+        font-weight: 700;
+        &:hover {
+          color: $secondary-color;
+        }
+
+        &.active {
+          color: $secondary-color;
+        }
+
+        i {
+          font-size: 1.1rem;
+          @include mobile {
+            font-size: 1.4rem;
+          }
+        }
+        span {
+          @include mobile {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .navbar-auth {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: none;
+        background: none;
+        color: $danger-color;
+        border: 1px solid $danger-color;
+        .nav-icon {
+          font-size: 1.1rem;
+        }
+        &:hover {
+            background-color: $danger-color;
+            color: $white;
+          }
+      }
+    }
+  }
+} 

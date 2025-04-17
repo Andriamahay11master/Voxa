@@ -1,0 +1,158 @@
+.login-page,
+.register-page,
+.reset-password-page {
+  min-height: 100vh;
+  @include flex-center;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: #f8f9fa;
+
+  h1 {
+    color: $primary-color;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .login-form,
+  .register-form,
+  .reset-password-form {
+    background: $white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: $shadow-md;
+    width: 100%;
+    max-width: 400px;
+
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: $primary-color;
+        font-weight: 500;
+        font-size: 0.9rem;
+        font-style: italic;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $secondary-color;
+        }
+      }
+
+      &.form-group-password {
+        position: relative;
+
+        .password-toggle {
+          position: absolute;
+          right: 1rem;
+          bottom: 8px;
+          cursor: pointer;
+          color: $text-secondary;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: $secondary-color;
+          }
+        }
+        input {
+          padding-right: 2.5rem;
+        }
+      }
+    }
+
+    .input-group {
+      position: relative;
+
+      .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $text-secondary;
+      }
+
+      input {
+        padding-left: 2.5rem;
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-direction: column;
+
+      .forgot-password {
+        margin-top: 1rem;
+        color: $secondary-color;
+        text-decoration: none;
+        font-size: 0.8rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $black;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    button {
+      width: 100%;
+    }
+
+    .form-footer {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: $text-secondary;
+      font-size: 0.8rem;
+      a {
+        color: $secondary-color;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $black;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .success-message {
+    background-color: #dcfce7;
+    color: #16a34a;
+    padding: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .back-to-login {
+      display: inline-block;
+      color: #16a34a;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #15803d;
+      }
+    }
+  }
+} 

@@ -1,0 +1,84 @@
+.form-model{
+    .form-group {
+        margin-bottom: 1.5rem;
+        @include mobile{
+          margin-bottom: 0.7rem;
+        }
+      }
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: $black;
+        font-weight: 500;
+        font-size: 0.9rem;
+        font-style: italic;
+      }
+  
+      input, textarea {
+        width: 100%;
+        padding: 0.7rem;
+        border: 1px solid $white-f5;
+        border-radius: 4px;
+        background: $white-f5;
+        color: $black;
+        font-size: 0.9rem;
+        transition: border-color $transition-fast;
+        letter-spacing: 0.1rem;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+          border-color: $primary-color;
+        }
+  
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+        &::placeholder{
+          color: $text-secondary;
+          opacity: 0.5;
+        }
+      }
+  
+      textarea {
+        min-height: 100px;
+      }
+      &.form-edit{
+        input{
+          background: $white;
+        }
+      }
+}
+
+input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+  appearance: none;
+  background-color: $white;
+  border: 2px solid $border-color;
+  border-radius: $border-radius-sm;
+  transition: all $transition-fast;
+
+  &:checked {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid $white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  &:hover {
+    border-color: $primary-color;
+  }
+}

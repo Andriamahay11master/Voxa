@@ -1,0 +1,85 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($black, 0.5);
+  @include flex-center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-content {
+  background-color: $white;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  animation: slideIn 0.3s ease-in-out;
+  max-height: 90vh;
+  overflow-y: auto;
+  @include tablet{
+    width: 95%;
+    margin: 1rem;
+  }
+  &.small {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  &.medium {
+    width: 90%;
+    max-width: 600px;
+  }
+
+  &.large {
+    width: 90%;
+    max-width: 800px;
+  }
+}
+
+.modal-header {
+  @include flex-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid $border-color;
+
+  h2 {
+    margin: 0;
+    color: $black;
+    font-size: 1.25rem;
+  }
+
+}
+
+.modal-body {
+  padding: 1.5rem;
+  .modal-delete {
+    text-align: center;
+
+    p {
+      color: $black;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        color: $black;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+  }
+  .modal-actions {
+    @include flex-center;
+    gap: 1rem;
+  }
+}
+

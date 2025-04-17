@@ -1,12 +1,17 @@
 import "./App.scss";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import PublicRoute from "./components/route/PublicRoute";
 import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <Route>
+    <Router>
       <AuthProvider>
         <Routes>
           <Route
@@ -21,7 +26,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>
-    </Route>
+    </Router>
   );
 }
 

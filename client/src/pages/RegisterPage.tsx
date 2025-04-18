@@ -73,6 +73,7 @@ const RegisterPage = () => {
         nbContacts: 0,
         nbNotification: 0,
       });
+
       navigate("/login");
     } catch (error) {
       setError("An error occurred while registering.");

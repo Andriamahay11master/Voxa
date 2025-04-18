@@ -9,6 +9,9 @@ import PublicRoute from "./components/route/PublicRoute";
 import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 import RegisterPage from "./pages/RegisterPage";
+import ProtectedRoute from "./components/route/ProtectedRoute";
+import Home from "./pages/Home";
+import AuthentificatedLayout from "./components/authentificated/AuthentificatedLayout";
 
 function App() {
   return (
@@ -29,6 +32,16 @@ function App() {
               <PublicRoute>
                 <RegisterPage />
               </PublicRoute>
+            }
+          ></Route>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <Home />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
             }
           ></Route>
           {/* Catch all route */}

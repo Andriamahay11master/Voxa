@@ -12,6 +12,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import Home from "./pages/Home";
 import AuthentificatedLayout from "./components/authentificated/AuthentificatedLayout";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
             element={
               <PublicRoute>
                 <RegisterPage />
+              </PublicRoute>
+            }
+          ></Route>
+          <Route
+            path="/reset-password"
+            element={
+              <PublicRoute>
+                <ResetPasswordPage />
               </PublicRoute>
             }
           ></Route>

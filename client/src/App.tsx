@@ -8,6 +8,7 @@ import {
 import PublicRoute from "./components/route/PublicRoute";
 import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthContext";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
             element={
               <PublicRoute>
                 <Login />
+              </PublicRoute>
+            }
+          ></Route>
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <RegisterPage />
               </PublicRoute>
             }
           ></Route>

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/loader/Loader";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import firebase from "../firebase";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -37,23 +40,43 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      // Create user with email and password in firebase auth
+      const userCredential = await createUserWithEmailAndPassword(
+        firebase.auth,
+        formData.email,
+        formData.password
+      );
+
+      // Update user profile with display name
+      await updateProfile(userCredential.user, {
+        displayName: formData.displayName,
       });
-      const data = await response.json();
-      if (data.error) {
-        setError(data.error);
-        setLoading(false);
-      } else {
-        navigate("/login");
-      }
+
+      // Create user document in Firestore
+      await setDoc(doc(firebase.db, "users", userCredential.user.uid), {
+        displayName: formData.displayName,
+        avatar: "",
+        email: formData.email,
+        phoneNumber: "",
+        bio: "",
+        birthday: "",
+        adress: "",
+        createdAt: new Date().toISOString(),
+        nbContacts: 0,
+        nbNotification: 0,
+      });
+      navigate("/login");
     } catch (error) {
       setError("An error occurred while registering.");
+    } finally {
       setLoading(false);
     }
   };

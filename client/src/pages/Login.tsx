@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../components/loader/Loader";
+import firebase from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -11,6 +15,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Get the redirect path from location state or default to home
+  const from = (location.state as any)?.from?.pathname || "/";
 
   //handleChange input forms
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,25 +36,19 @@ const Login = () => {
   //handleSubmit form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
+
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (data.error) {
-        setError(data.error);
-        setLoading(false);
-      } else {
-        localStorage.setItem("token", data.token);
-        window.location.href = "/profile";
-      }
-    } catch (error) {
-      setError("An error occurred while logging in.");
+      await signInWithEmailAndPassword(
+        firebase.auth,
+        formData.email,
+        formData.password
+      );
+      navigate(from, { replace: true });
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
       setLoading(false);
     }
   };

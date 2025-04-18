@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loader from "../components/loader/Loader";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -17,7 +17,6 @@ const RegisterPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -73,8 +72,6 @@ const RegisterPage = () => {
         nbContacts: 0,
         nbNotification: 0,
       });
-
-      navigate("/login");
     } catch (error) {
       setError("An error occurred while registering.");
     } finally {
@@ -147,7 +144,7 @@ const RegisterPage = () => {
             onClick={() => togglePasswordVisibility("confirmPassword")}
           >
             <i
-              className={showConfirmPassword ? "icon-eye-slash" : "icon-eye"}
+              className={showConfirmPassword ? "icon-eye-off" : "icon-eye"}
             ></i>
           </div>
         </div>

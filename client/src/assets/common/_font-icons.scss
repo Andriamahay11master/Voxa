@@ -1,18 +1,20 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url($font-path-icon + 'icomoon.eot?8mnhw0');
-  src:  url($font-path-icon + 'icomoon.eot?8mnhw0#iefix') format('embedded-opentype'),
-    url($font-path-icon + 'icomoon.ttf?8mnhw0') format('truetype'),
-    url($font-path-icon + 'icomoon.woff?8mnhw0') format('woff'),
-    url($font-path-icon + 'icomoon.svg?8mnhw0#icomoon') format('svg');
+  font-family: "icomoon";
+  src: url($font-path-icon + "icomoon.eot?sj724m");
+  src: url($font-path-icon + "icomoon.eot?sj724m#iefix")
+      format("embedded-opentype"),
+    url($font-path-icon + "icomoon.ttf?sj724m") format("truetype"),
+    url($font-path-icon + "icomoon.woff?sj724m") format("woff"),
+    url($font-path-icon + "icomoon.svg?sj724m#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: "icomoon" !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -27,6 +29,63 @@
 
 .icon-clear:before {
   content: "\e900";
+}
+.icon-info:before {
+  content: "\e902";
+}
+.icon-menu:before {
+  content: "\e903";
+}
+.icon-send:before {
+  content: "\e905";
+}
+.icon-check:before {
+  content: "\e916";
+}
+.icon-search:before {
+  content: "\e917";
+}
+.icon-video-off:before {
+  content: "\e918";
+}
+.icon-mic-off:before {
+  content: "\e919";
+}
+.icon-mic:before {
+  content: "\e91a";
+}
+.icon-paperclip:before {
+  content: "\e91b";
+}
+.icon-camera:before {
+  content: "\e91c";
+}
+.icon-video:before {
+  content: "\e91d";
+}
+.icon-arrow-left:before {
+  content: "\e91e";
+}
+.icon-folder-plus:before {
+  content: "\e91f";
+}
+.icon-heart:before {
+  content: "\e920";
+}
+.icon-star:before {
+  content: "\e921";
+}
+.icon-phone-incoming:before {
+  content: "\e922";
+}
+.icon-phone-outgoing:before {
+  content: "\e923";
+}
+.icon-phone:before {
+  content: "\e924";
+}
+.icon-message:before {
+  content: "\e925";
 }
 .icon-save:before {
   content: "\e901";
@@ -82,5 +141,3 @@
 .icon-eye:before {
   content: "\e908";
 }
-
-

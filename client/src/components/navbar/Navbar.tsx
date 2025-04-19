@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
               }`}
               onClick={() => handleLinkClick("/listchat")}
             >
-              <i className="icon-plus"></i>
+              <i className="icon-message"></i>
               <span>Discussions</span>
             </Link>
             <Link

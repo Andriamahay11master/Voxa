@@ -44,12 +44,14 @@ const Navbar: React.FC = () => {
               <span>Home</span>
             </Link>
             <Link
-              to="/create"
-              className={`nav-item ${activeLink === "/create" ? "active" : ""}`}
-              onClick={() => handleLinkClick("/create")}
+              to="/listchat"
+              className={`nav-item ${
+                activeLink === "/listchat" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/listchat")}
             >
               <i className="icon-plus"></i>
-              <span>Create List</span>
+              <span>Discussions</span>
             </Link>
             <Link
               to="/profile"

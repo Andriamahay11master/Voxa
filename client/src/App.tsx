@@ -15,6 +15,7 @@ import AuthentificatedLayout from "./components/authentificated/AuthentificatedL
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Profile from "./pages/Profile";
 import ListChat from "./pages/ListChat";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -75,6 +76,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/chat"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <Chat />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
+            }
+          ></Route>
           {/* Catch all route */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

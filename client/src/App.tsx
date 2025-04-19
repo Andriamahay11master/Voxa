@@ -16,6 +16,8 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Profile from "./pages/Profile";
 import ListChat from "./pages/ListChat";
 import Chat from "./pages/Chat";
+import ListCall from "./pages/ListCall";
+import DetailCall from "./pages/DetailCall";
 
 function App() {
   return (
@@ -67,7 +69,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/listchat"
+            path="/chat"
             element={
               <ProtectedRoute>
                 <AuthentificatedLayout>
@@ -77,11 +79,31 @@ function App() {
             }
           />
           <Route
-            path="/chat"
+            path="/chat/:id"
             element={
               <ProtectedRoute>
                 <AuthentificatedLayout>
                   <Chat />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/listcall"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <ListCall />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/listcall/:id"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <DetailCall />
                 </AuthentificatedLayout>
               </ProtectedRoute>
             }

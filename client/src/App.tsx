@@ -18,6 +18,9 @@ import ListChat from "./pages/ListChat";
 import Chat from "./pages/Chat";
 import ListCall from "./pages/ListCall";
 import DetailCall from "./pages/DetailCall";
+import Contact from "./pages/Contact";
+import NewContact from "./pages/NewContact";
+import ProfileFriend from "./pages/ProfileFriend";
 
 function App() {
   return (
@@ -69,6 +72,16 @@ function App() {
             }
           ></Route>
           <Route
+            path="/profile/:id"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <ProfileFriend />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
             path="/chat"
             element={
               <ProtectedRoute>
@@ -104,6 +117,26 @@ function App() {
               <ProtectedRoute>
                 <AuthentificatedLayout>
                   <DetailCall />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/contacts"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <Contact />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/addContact"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <NewContact />
                 </AuthentificatedLayout>
               </ProtectedRoute>
             }

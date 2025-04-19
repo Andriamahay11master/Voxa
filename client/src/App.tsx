@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/route/ProtectedRoute";
 import Home from "./pages/Home";
 import AuthentificatedLayout from "./components/authentificated/AuthentificatedLayout";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -49,6 +50,16 @@ function App() {
               <ProtectedRoute>
                 <AuthentificatedLayout>
                   <Home />
+                </AuthentificatedLayout>
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <AuthentificatedLayout>
+                  <Profile />
                 </AuthentificatedLayout>
               </ProtectedRoute>
             }

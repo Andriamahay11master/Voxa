@@ -1,0 +1,18 @@
+.button-fixed {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 102;
+  @include mobile {
+    bottom: 5rem;
+    right: 1.5rem;
+  }
+  .btn-icon {
+    background: $primary-color;
+    color: $white;
+    padding: 0.8rem;
+    i {
+      font-size: 1.5rem;
+    }
+  }
+}

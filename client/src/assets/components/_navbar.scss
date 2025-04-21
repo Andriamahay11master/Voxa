@@ -23,6 +23,7 @@
     a {
       text-decoration: none;
       color: inherit;
+      font-weight: bold;
     }
   }
   .navbar-content {
@@ -38,6 +39,9 @@
       align-items: center;
       gap: 2rem;
       @include tablet {
+        gap: 1rem;
+      }
+      @include mobile {
         gap: 1rem;
       }
     }
@@ -122,10 +126,18 @@
           font-size: 1.1rem;
         }
         &:hover {
-            background-color: $danger-color;
-            color: $white;
-          }
+          background-color: $danger-color;
+          color: $white;
+        }
+      }
+    }
+    .navbar-functionality {
+      @include flex-center;
+      gap: 0.5rem;
+      display: none;
+      @include mobile {
+        display: flex;
       }
     }
   }
-} 
+}

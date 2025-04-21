@@ -72,7 +72,14 @@ const Navbar: React.FC = () => {
               <span>Calls</span>
             </Link>
           </div>
-
+          <div className="navbar-functionality">
+            <button className="btn btn-icon">
+              <i className="icon-camera"></i>
+            </button>
+            <button className="btn btn-icon">
+              <i className="icon-search"></i>
+            </button>
+          </div>
           <div className="navbar-auth">
             <button className="logout-btn" onClick={handleLogout}>
               <i className="icon-log-out"></i>

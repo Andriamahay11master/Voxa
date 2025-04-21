@@ -40,26 +40,8 @@ const Navbar: React.FC = () => {
               className={`nav-item ${activeLink === "/" ? "active" : ""}`}
               onClick={() => handleLinkClick("/")}
             >
-              <i className="icon-home"></i>
-              <span>Home</span>
-            </Link>
-            <Link
-              to="/chat"
-              className={`nav-item ${activeLink === "/chat" ? "active" : ""}`}
-              onClick={() => handleLinkClick("/chat")}
-            >
               <i className="icon-message"></i>
               <span>Discussions</span>
-            </Link>
-            <Link
-              to="/profile"
-              className={`nav-item ${
-                activeLink === "/profile" ? "active" : ""
-              }`}
-              onClick={() => handleLinkClick("/profile")}
-            >
-              <i className="icon-user"></i>
-              <span>Profile</span>
             </Link>
             <Link
               to="/listcall"
@@ -70,6 +52,16 @@ const Navbar: React.FC = () => {
             >
               <i className="icon-phone"></i>
               <span>Calls</span>
+            </Link>
+            <Link
+              to="/profile"
+              className={`nav-item ${
+                activeLink === "/profile" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/profile")}
+            >
+              <i className="icon-user"></i>
+              <span>Profile</span>
             </Link>
           </div>
           <div className="navbar-functionality">

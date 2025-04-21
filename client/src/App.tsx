@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 import RegisterPage from "./pages/RegisterPage";
 import ProtectedRoute from "./components/route/ProtectedRoute";
-import Home from "./pages/Home";
 import AuthentificatedLayout from "./components/authentificated/AuthentificatedLayout";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Profile from "./pages/Profile";
@@ -52,16 +51,6 @@ function App() {
             }
           ></Route>
           <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <AuthentificatedLayout>
-                  <Home />
-                </AuthentificatedLayout>
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
             path="/profile"
             element={
               <ProtectedRoute>
@@ -82,7 +71,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/chat"
+            path="/"
             element={
               <ProtectedRoute>
                 <AuthentificatedLayout>

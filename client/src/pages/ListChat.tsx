@@ -1,25 +1,43 @@
 import ButtonFixed from "../components/ButtonFixed/ButtonFixed";
 import { getDoc } from "firebase/firestore";
 import { doc } from "firebase/firestore";
+import { useAuth } from "../contexts/AuthContext";
 import firebase from "../firebase";
 import { ChatType } from "../models/ChatType";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ListChat = () => {
-  const docRef = doc(firebase.db, "users", "user1");
+  const { user } = useAuth();
+  const docRef = doc(firebase.db, "chats", user?.uid || "");
   const [chats, setChats] = useState<ChatType[]>([]);
-  //function to get List Chat from firestore
-  const getListChat = async () => {
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  };
+
+  useEffect(() => {
+    const getChats = async () => {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setChats(docSnap.data().chats);
+      }
+    };
+
+    getChats();
+  }, [user?.uid]);
   return (
     <div className="list-chat">
+      <div className="list-left">
+        {chats.length === 0 && <p>No chats yet</p>}
+        {chats.map((chat) => (
+          <div className="chat-item" key={chat.id}>
+            <div className="chat-picture">
+              <img src={chat.pictureContact} alt={chat.pictureContact} />
+            </div>
+            <div className="chat-info">
+              <span>{chat.nameContact}</span>
+              <p>{chat.lastMessage}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="list-right"></div>
       <ButtonFixed path="/contacts" classIcon="icon-user-plus" />
     </div>
   );

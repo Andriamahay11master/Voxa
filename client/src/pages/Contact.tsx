@@ -59,11 +59,16 @@ const Contact = () => {
       <div className="list-users-top">
         <div className="list-top-left">
           <h3>Contacts</h3>
-          <span>{getNumberOfUsers()} contacts</span>
+          <span>
+            {getNumberOfUsers()}{" "}
+            {getNumberOfUsers() > 1 ? "contacts" : "contact"}
+          </span>
         </div>
         <div className="list-top-right">
-          <input type="text" placeholder="Search" />
-          <i className="icon-search"></i>
+          <div className="form-search">
+            <input type="text" placeholder="Search" />
+            <i className="icon-search"></i>
+          </div>
         </div>
       </div>
       <div className="list-users-bottom">

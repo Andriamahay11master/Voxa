@@ -1,0 +1,34 @@
+.list-users {
+  .list-users-top {
+    @include flex-between;
+    align-items: start;
+    margin-bottom: 1rem;
+    .form-search {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+      input {
+        width: 100%;
+        padding: 0.5rem 1.5rem 0.5rem 1rem;
+        border: 1px solid $primary-color;
+        border-radius: 5px;
+        &:focus {
+          outline: none;
+          & + i {
+            color: $white;
+          }
+        }
+      }
+      i {
+        position: absolute;
+        top: 45%;
+        right: 0.5rem;
+        transform: translateY(-45%);
+        color: rgba($white, 0.5);
+        font-size: 1.2rem;
+      }
+    }
+  }
+  .list-users-bottom {
+  }
+}

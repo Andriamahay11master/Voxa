@@ -5,11 +5,13 @@ import { useAuth } from "../contexts/AuthContext";
 import firebase from "../firebase";
 import { ChatType } from "../models/ChatType";
 import { useEffect, useState } from "react";
+import Loader from "../components/loader/Loader";
 
 const ListChat = () => {
   const { user } = useAuth();
   const docRef = doc(firebase.db, "chats", user?.uid || "");
   const [chats, setChats] = useState<ChatType[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getChats = async () => {
@@ -21,6 +23,13 @@ const ListChat = () => {
 
     getChats();
   }, [user?.uid]);
+
+  if (loading)
+    return (
+      <div className="loader-container">
+        <Loader />
+      </div>
+    );
   return (
     <div className="list-chat">
       <div className="list-left">

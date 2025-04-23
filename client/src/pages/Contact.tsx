@@ -21,6 +21,7 @@ const Contact = () => {
       }
     };
     fetchUsers();
+    setLoading(false);
   }, [user?.uid]);
 
   //function to get the numbers of users in the app

@@ -1,12 +1,35 @@
 .list-users {
+  .list-title {
+    margin-bottom: 0.5rem;
+  }
+  .list-count {
+    font-style: italic;
+  }
+  .list-top-left {
+    @include mobile {
+      margin-bottom: 1rem;
+    }
+  }
+  .list-top-right {
+    @include mobile {
+      width: 100%;
+    }
+  }
   .list-users-top {
     @include flex-between;
     align-items: start;
     margin-bottom: 1rem;
+    @include mobile {
+      width: 100%;
+      flex-direction: column;
+    }
     .form-search {
       position: relative;
       width: 100%;
       max-width: 300px;
+      @include mobile {
+        max-width: unset;
+      }
       input {
         width: 100%;
         padding: 0.5rem 1.5rem 0.5rem 1rem;

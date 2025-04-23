@@ -58,8 +58,8 @@ const Contact = () => {
     <div className="list-users">
       <div className="list-users-top">
         <div className="list-top-left">
-          <h3>Contacts</h3>
-          <span>
+          <h3 className="list-title">Contacts</h3>
+          <span className="list-count">
             {getNumberOfUsers()}{" "}
             {getNumberOfUsers() > 1 ? "contacts" : "contact"}
           </span>

@@ -23,14 +23,14 @@ body {
   padding-top: 100px;
   @include flex-column;
   @include mobile {
-    padding-top: 60px;
+    padding-top: 4.5rem;
   }
 }
 
 .main-content {
   flex: 1;
   @include mobile {
-    padding: $spacing-lg $spacing-lg 3rem;
+    padding: 0 0 3rem;
   }
 }
 

@@ -2,27 +2,44 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { UserType } from "../models/UserType";
 import firebase from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Loader from "../components/loader/Loader";
 
 const Contact = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const docRef = doc(firebase.db, "users", user?.uid || "");
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!user) return;
     const fetchUsers = async () => {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setUsers(docSnap.data().contacts);
+      try {
+        const usersRef = collection(firebase.db, "users");
+        const q = query(usersRef, orderBy("displayName"));
+        const querySnapshot = await getDocs(q);
+        const usersData: UserType[] = [];
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          usersData.push({
+            displayName: data.displayName || "",
+            avatar: data.avatar || "",
+            email: data.email || "",
+            phoneNumber: data.phoneNumber || "",
+            bio: data.bio || "",
+            adress: data.adress || "",
+          });
+        });
+        setUsers(usersData);
+      } catch (err: any) {
+        setError(err.message || "Failed to fetch users");
+      } finally {
         setLoading(false);
       }
     };
     fetchUsers();
-    setLoading(false);
-  }, [user?.uid]);
+  }, [user]);
 
   //function to get the numbers of users in the app
   const getNumberOfUsers = () => {
@@ -51,8 +68,9 @@ const Contact = () => {
       </div>
       <div className="list-users-bottom">
         <div className="list-body">
+          {error && <div className="error-message">{error}</div>}
           {users.map((user) => (
-            <div className="user-item" key={user.id}>
+            <div className="user-item" key={user.displayName}>
               <div className="user-picture">
                 <img src={user.avatar} alt={user.avatar} />
               </div>

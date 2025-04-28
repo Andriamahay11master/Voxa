@@ -52,7 +52,9 @@
       }
     }
   }
-  .list-users-bottom {
+  .list-body {
+    @include flex-column;
+    gap: 1rem;
   }
   .user-item {
     @include flex-start;

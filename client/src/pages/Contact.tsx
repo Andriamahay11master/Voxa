@@ -4,6 +4,7 @@ import { UserType } from "../models/UserType";
 import firebase from "../firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Loader from "../components/loader/Loader";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   const { user } = useAuth();
@@ -75,14 +76,21 @@ const Contact = () => {
         <div className="list-body">
           {error && <div className="error-message">{error}</div>}
           {users.map((user) => (
-            <div className="user-item" key={user.displayName}>
+            <Link
+              to={`/chat/${user.displayName}`}
+              className="user-item"
+              key={user.displayName}
+            >
               <div className="user-picture">
-                <img src={user.avatar} alt={user.avatar} />
+                <img
+                  src={user.avatar ? user.avatar : "/user.jpg"}
+                  alt={user.avatar}
+                />
               </div>
               <div className="user-info">
                 <p>{user.displayName}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

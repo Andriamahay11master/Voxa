@@ -31,7 +31,7 @@ const ProfileComponent = ({ user }: ProfileComponentProps) => {
             <i className="icon-user"></i>
           </div>
           <div className="profil-item-right">
-            <h3>Nom</h3>
+            <h3 className="profil-info-title">Nom</h3>
             <p>{user.displayName}</p>
           </div>
         </div>
@@ -40,16 +40,16 @@ const ProfileComponent = ({ user }: ProfileComponentProps) => {
             <i className="icon-info"></i>
           </div>
           <div className="profil-item-right">
-            <h3>Infos</h3>
+            <h3 className="profil-info-title">Infos</h3>
             <p>{user.bio}</p>
           </div>
         </div>
         <div className="profil-info-item">
           <div className="profil-item-left">
-            <i className="icon-user"></i>
+            <i className="icon-phone"></i>
           </div>
           <div className="profil-item-right">
-            <h3>Téléphone</h3>
+            <h3 className="profil-info-title">Téléphone</h3>
             <p>{user.phoneNumber}</p>
           </div>
         </div>

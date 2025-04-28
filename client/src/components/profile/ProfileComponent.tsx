@@ -1,6 +1,9 @@
 import { UserType } from "../../models/UserType";
 
-const Profile = (user: UserType) => {
+interface ProfileComponentProps {
+  user: UserType;
+}
+const ProfileComponent = ({ user }: ProfileComponentProps) => {
   return (
     <div className="profile-component">
       <div className="profil-top">
@@ -41,4 +44,4 @@ const Profile = (user: UserType) => {
     </div>
   );
 };
-export default Profile;
+export default ProfileComponent;

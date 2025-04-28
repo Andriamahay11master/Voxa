@@ -32,6 +32,8 @@
       @include mobile {
         bottom: 0;
         right: 0;
+        width: 40px;
+        height: 40px;
       }
       label {
         @include flex-center;
@@ -47,16 +49,25 @@
     @include flex-column;
     align-items: center;
     gap: 2rem;
+    @include mobile {
+      gap: 1.5rem;
+    }
     .profil-info-item {
       width: 30vw;
       display: grid;
       grid-template-columns: 3rem 1fr;
       justify-content: start;
+      @include mobile {
+        width: 100%;
+      }
       & > div {
         line-height: 1;
       }
       .profil-info-title {
         margin-bottom: 1rem;
+        @include mobile {
+          margin-bottom: 0.7rem;
+        }
       }
       i {
         font-size: 1.2rem;

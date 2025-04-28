@@ -1,0 +1,46 @@
+.profile-component {
+  .profil-top {
+    @include flex-center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    .profil-picture {
+      position: relative;
+      max-width: 250px;
+      max-height: 250px;
+    }
+    img {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      @include mobile {
+        width: 150px;
+        height: 150px;
+      }
+    }
+    .action-change-photo {
+      @include flex-center;
+      position: absolute;
+      cursor: pointer;
+      background-color: $primary-color;
+      bottom: 1rem;
+      right: 1rem;
+      padding: 1rem;
+      border-radius: 100%;
+      width: 45px;
+      height: 45px;
+      @include mobile {
+        bottom: 0;
+        right: 0;
+      }
+      label {
+        @include flex-center;
+        color: $white;
+        margin: 0;
+        i {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}

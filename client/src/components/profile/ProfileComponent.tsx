@@ -7,10 +7,23 @@ const ProfileComponent = ({ user }: ProfileComponentProps) => {
   return (
     <div className="profile-component">
       <div className="profil-top">
-        <img src={user.avatar ? user.avatar : "/user.jpg"} alt={user.avatar} />
-        <button className="btn btn-icon">
-          <i className="icon-camera"></i>
-        </button>
+        <div className="profil-picture">
+          <img
+            src={user.avatar ? user.avatar : "/user.jpg"}
+            alt={user.avatar}
+          />
+          <div className="action-change-photo">
+            <input
+              type="file"
+              accept="image/*"
+              id="file"
+              style={{ display: "none" }}
+            />
+            <label htmlFor="file">
+              <i className="icon-camera"></i>
+            </label>
+          </div>
+        </div>
       </div>
       <div className="profil-content">
         <div className="profil-info-item">

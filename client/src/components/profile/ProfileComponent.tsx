@@ -15,11 +15,12 @@ const ProfileComponent = ({
   user,
   userFriendId,
 }: ProfileComponentProps) => {
+  const [userLocale, setUserLocale] = useState<UserType>(user);
   const [editMode, setEditMode] = useState(false);
   const [editForm, setEditForm] = useState({
-    displayName: user.displayName,
-    bio: user.bio,
-    phoneNumber: user.phoneNumber,
+    displayName: userLocale.displayName,
+    bio: userLocale.bio,
+    phoneNumber: userLocale.phoneNumber,
   });
 
   const handleCancel = () => {
@@ -41,6 +42,12 @@ const ProfileComponent = ({
         bio: editForm.bio,
         phoneNumber: editForm.phoneNumber,
       });
+      setUserLocale({
+        ...userLocale,
+        displayName: editForm.displayName,
+        bio: editForm.bio,
+        phoneNumber: editForm.phoneNumber,
+      });
     } catch (err: any) {
       console.log(err);
     } finally {
@@ -58,8 +65,8 @@ const ProfileComponent = ({
       <div className="profil-top">
         <div className="profil-picture">
           <img
-            src={user.avatar ? user.avatar : "/user.jpg"}
-            alt={user.avatar}
+            src={userLocale.avatar ? userLocale.avatar : "/user.jpg"}
+            alt={userLocale.avatar}
           />
           <div className="action-change-photo">
             <input
@@ -89,7 +96,7 @@ const ProfileComponent = ({
                 onChange={handleEditForm}
               />
             ) : (
-              <p>{user.displayName}</p>
+              <p>{userLocale.displayName}</p>
             )}
           </div>
         </div>
@@ -107,7 +114,7 @@ const ProfileComponent = ({
                 onChange={handleEditForm}
               />
             ) : (
-              <p>{user.bio || "Hello, I'm using Voxa"}</p>
+              <p>{userLocale.bio || "Hello, I'm using Voxa"}</p>
             )}
           </div>
         </div>
@@ -126,7 +133,7 @@ const ProfileComponent = ({
                 onChange={handleEditForm}
               />
             ) : (
-              <p>{user.phoneNumber || "Not set"}</p>
+              <p>{userLocale.phoneNumber || "Not set"}</p>
             )}
           </div>
         </div>

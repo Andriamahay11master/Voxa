@@ -1,4 +1,14 @@
 .profile-component {
+  position: relative;
+  .btn-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    @include mobile {
+      top: 0;
+      right: 0;
+    }
+  }
   .profil-top {
     @include flex-center;
     gap: 1rem;
@@ -49,8 +59,10 @@
     @include flex-column;
     align-items: center;
     gap: 2rem;
+    padding-bottom: 6rem;
     @include mobile {
       gap: 1.5rem;
+      padding-bottom: 0;
     }
     .profil-info-item {
       width: 30vw;
@@ -72,6 +84,25 @@
       i {
         font-size: 1.2rem;
       }
+    }
+  }
+  .profil-edit-action {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    @include flex-center;
+    padding: 1rem;
+    background-color: $white;
+    box-shadow: $shadow-lg;
+    gap: 0.8rem;
+    @include mobile {
+      background: transparent;
+      bottom: 4rem;
+    }
+    button {
+      margin: 0;
     }
   }
 }

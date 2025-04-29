@@ -3,18 +3,22 @@ import { UserType } from "../../models/UserType";
 
 interface ProfileComponentProps {
   user: UserType;
+  userFriendId?: string;
 }
-const ProfileComponent = ({ user }: ProfileComponentProps) => {
+const ProfileComponent = ({ user, userFriendId }: ProfileComponentProps) => {
   const [editMode, setEditMode] = useState(false);
 
   const handleCancel = () => {
     setEditMode(false);
   };
+
   return (
     <div className="profile-component">
-      <button className="btn btn-icon" onClick={() => setEditMode(true)}>
-        <i className="icon-edit"></i>
-      </button>
+      {!userFriendId && (
+        <button className="btn btn-icon" onClick={() => setEditMode(true)}>
+          <i className="icon-edit"></i>
+        </button>
+      )}
       <div className="profil-top">
         <div className="profil-picture">
           <img

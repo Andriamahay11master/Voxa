@@ -1,15 +1,51 @@
 import { useState } from "react";
 import { UserType } from "../../models/UserType";
+import firebase from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { User } from "firebase/auth";
 
 interface ProfileComponentProps {
+  userContext?: User | null;
   user: UserType;
   userFriendId?: string;
 }
-const ProfileComponent = ({ user, userFriendId }: ProfileComponentProps) => {
+
+const ProfileComponent = ({
+  userContext,
+  user,
+  userFriendId,
+}: ProfileComponentProps) => {
   const [editMode, setEditMode] = useState(false);
+  const [editForm, setEditForm] = useState({
+    displayName: user.displayName,
+    bio: user.bio,
+    phoneNumber: user.phoneNumber,
+  });
 
   const handleCancel = () => {
     setEditMode(false);
+  };
+
+  const handleEditForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditForm({
+      ...editForm,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const saveEditUser = async () => {
+    const userRef = doc(firebase.db, "users", userContext!.uid);
+    try {
+      await updateDoc(userRef, {
+        displayName: editForm.displayName,
+        bio: editForm.bio,
+        phoneNumber: editForm.phoneNumber,
+      });
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setEditMode(false);
+    }
   };
 
   return (
@@ -48,8 +84,9 @@ const ProfileComponent = ({ user, userFriendId }: ProfileComponentProps) => {
             {editMode ? (
               <input
                 type="text"
-                value={user.displayName}
-                onChange={(e) => console.log(e.target.value)}
+                name="displayName"
+                value={editForm.displayName}
+                onChange={handleEditForm}
               />
             ) : (
               <p>{user.displayName}</p>
@@ -65,8 +102,9 @@ const ProfileComponent = ({ user, userFriendId }: ProfileComponentProps) => {
             {editMode ? (
               <input
                 type="text"
-                value={user.bio}
-                onChange={(e) => console.log(e.target.value)}
+                name="bio"
+                value={editForm.bio}
+                onChange={handleEditForm}
               />
             ) : (
               <p>{user.bio || "Hello, I'm using Voxa"}</p>
@@ -83,8 +121,9 @@ const ProfileComponent = ({ user, userFriendId }: ProfileComponentProps) => {
             {editMode ? (
               <input
                 type="text"
-                value={user.phoneNumber}
-                onChange={(e) => console.log(e.target.value)}
+                name="phoneNumber"
+                value={editForm.phoneNumber}
+                onChange={handleEditForm}
               />
             ) : (
               <p>{user.phoneNumber || "Not set"}</p>
@@ -94,10 +133,7 @@ const ProfileComponent = ({ user, userFriendId }: ProfileComponentProps) => {
       </div>
       {editMode && (
         <div className="profil-edit-action">
-          <button
-            className="btn btn-primary"
-            onClick={() => setEditMode(false)}
-          >
+          <button className="btn btn-primary" onClick={saveEditUser}>
             Save
           </button>
           <button className="btn btn-cancel" onClick={handleCancel}>
@@ -108,4 +144,5 @@ const ProfileComponent = ({ user, userFriendId }: ProfileComponentProps) => {
     </div>
   );
 };
+
 export default ProfileComponent;

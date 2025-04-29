@@ -40,7 +40,7 @@ const Profile = () => {
   return (
     <div className="content-page">
       {error && <div className="error-message">{error}</div>}
-      {userData && <ProfileComponent user={userData} />}
+      {userData && <ProfileComponent userContext={user} user={userData} />}
     </div>
   );
 };

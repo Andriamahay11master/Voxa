@@ -31,7 +31,7 @@ const ProfileComponent = ({ user }: ProfileComponentProps) => {
             <i className="icon-user"></i>
           </div>
           <div className="profil-item-right">
-            <h3 className="profil-info-title">Nom</h3>
+            <h3 className="profil-info-title">Name</h3>
             <p>{user.displayName}</p>
           </div>
         </div>
@@ -41,7 +41,7 @@ const ProfileComponent = ({ user }: ProfileComponentProps) => {
           </div>
           <div className="profil-item-right">
             <h3 className="profil-info-title">Infos</h3>
-            <p>{user.bio}</p>
+            <p>{user.bio || "Hello, I'm using Voxa"}</p>
           </div>
         </div>
         <div className="profil-info-item">
@@ -49,8 +49,8 @@ const ProfileComponent = ({ user }: ProfileComponentProps) => {
             <i className="icon-phone"></i>
           </div>
           <div className="profil-item-right">
-            <h3 className="profil-info-title">Téléphone</h3>
-            <p>{user.phoneNumber}</p>
+            <h3 className="profil-info-title">Telephone number</h3>
+            <p>{user.phoneNumber || "Not set"}</p>
           </div>
         </div>
       </div>

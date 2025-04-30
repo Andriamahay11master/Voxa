@@ -1,0 +1,45 @@
+.alert-component {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: $primary-color;
+  color: $white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  @include flex-center;
+  gap: 1rem;
+  z-index: 1000;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &.success {
+    background-color: $success-color;
+  }
+
+  &.error {
+    background-color: $danger-color;
+  }
+
+  &.warning {
+    background-color: $warning-color;
+  }
+
+  .alert-content {
+    flex: 1;
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+    }
+  }
+
+  .btn-icon {
+    color: $white;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    &:hover {
+      color: lighten($white, 20%);
+    }
+  }
+}

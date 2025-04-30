@@ -3,6 +3,7 @@ import { UserType } from "../../models/UserType";
 import firebase from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { User } from "firebase/auth";
+import Alert from "../alert/Alert";
 
 interface ProfileComponentProps {
   userContext?: User | null;
@@ -175,6 +176,8 @@ const ProfileComponent = ({
           </button>
         </div>
       )}
+
+      <Alert text="Profile picture updated" type="success" />
     </div>
   );
 };

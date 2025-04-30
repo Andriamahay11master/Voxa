@@ -4,9 +4,9 @@
   right: 1rem;
   background-color: $primary-color;
   color: $white;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: $shadow-lg;
   @include flex-center;
   gap: 1rem;
   z-index: 1000;
@@ -36,10 +36,10 @@
   .btn-icon {
     color: $white;
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0.1rem;
+    right: 0.1rem;
     &:hover {
-      color: lighten($white, 20%);
+      color: darken($white, 20%);
     }
   }
 }

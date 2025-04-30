@@ -55,6 +55,32 @@ const ProfileComponent = ({
     }
   };
 
+  //function change photo
+  const handleProfilePhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "profile_doc"); // from Cloudinary dashboard
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dcctxqmgj/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      const url = data.secure_url;
+
+      const userRef = doc(firebase.db, "users", userContext!.uid);
+      await updateDoc(userRef, { avatar: url });
+      setUserLocale({ ...userLocale, avatar: url });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="profile-component">
       {!userFriendId && (
@@ -74,6 +100,7 @@ const ProfileComponent = ({
               accept="image/*"
               id="file"
               style={{ display: "none" }}
+              onChange={handleProfilePhoto}
             />
             <label htmlFor="file">
               <i className="icon-camera"></i>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UserType } from "../../models/UserType";
 import firebase from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
@@ -17,7 +17,9 @@ const ProfileComponent = ({
   userFriendId,
 }: ProfileComponentProps) => {
   const [userLocale, setUserLocale] = useState<UserType>(user);
+  const [picture, setPicture] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const alertTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [editForm, setEditForm] = useState({
     displayName: userLocale.displayName,
     bio: userLocale.bio,
@@ -77,11 +79,21 @@ const ProfileComponent = ({
       const userRef = doc(firebase.db, "users", userContext!.uid);
       await updateDoc(userRef, { avatar: url });
       setUserLocale({ ...userLocale, avatar: url });
+      setPicture(true);
+      if (alertTimeoutRef.current) clearTimeout(alertTimeoutRef.current);
+      alertTimeoutRef.current = setTimeout(() => {
+        setPicture(false);
+      }, 3000);
     } catch (err) {
       console.log(err);
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (alertTimeoutRef.current) clearTimeout(alertTimeoutRef.current);
+    };
+  }, []);
   return (
     <div className="profile-component">
       {!userFriendId && (
@@ -177,7 +189,7 @@ const ProfileComponent = ({
         </div>
       )}
 
-      <Alert text="Profile picture updated" type="success" />
+      {picture && <Alert text="Profile picture updated" type="success" />}
     </div>
   );
 };

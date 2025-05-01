@@ -60,6 +60,7 @@ const ProfileComponent = ({
 
   //function change photo
   const handleProfilePhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditMode(false);
     const file = e.target.files![0];
     const formData = new FormData();
     formData.append("file", file);

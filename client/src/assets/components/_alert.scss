@@ -7,11 +7,12 @@
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: $shadow-lg;
+  transform: translateX(100%);
   @include flex-center;
   gap: 1rem;
   z-index: 1000;
   transition: transform 0.3s ease, opacity 0.3s ease;
-
+  opacity: 0;
   &.success {
     background-color: $success-color;
   }
@@ -24,6 +25,10 @@
     background-color: $warning-color;
   }
 
+  &.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
   .alert-content {
     flex: 1;
 

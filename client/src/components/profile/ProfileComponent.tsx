@@ -189,7 +189,10 @@ const ProfileComponent = ({
         </div>
       )}
 
-      {picture && <Alert text="Profile picture updated" type="success" />}
+      <Alert
+        text="Profile picture updated"
+        type={picture ? "success show" : ""}
+      />
     </div>
   );
 };

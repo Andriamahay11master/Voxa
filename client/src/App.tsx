@@ -81,7 +81,7 @@ function App() {
             }
           />
           <Route
-            path="/chat/:id"
+            path="/chat/:displayName"
             element={
               <ProtectedRoute>
                 <AuthentificatedLayout>

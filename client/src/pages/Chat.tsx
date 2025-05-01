@@ -3,12 +3,42 @@ import { useAuth } from "../contexts/AuthContext";
 import firebase from "../firebase";
 import { useEffect, useState } from "react";
 import Loader from "../components/loader/Loader";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { UserType } from "../models/UserType";
 
 const Chat = () => {
   const { user } = useAuth();
   const { displayName } = useParams<{ displayName: string }>();
+  const [loading, setLoading] = useState(true);
+  const [userFriend, setUserFriend] = useState<UserType | null>(null);
 
+  useEffect(() => {
+    if (!user) return;
+    const getUserFriend = async () => {
+      try {
+        const q = query(
+          collection(firebase.db, "users"),
+          where("displayName", "==", displayName)
+        );
+        const querySnapshot = await getDocs(q);
+        const userData = querySnapshot.docs[0].data() as UserType;
+        setUserFriend(userData);
+      } catch (err: any) {
+        console.log(err.message || "Failed to fetch user data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getUserFriend();
+  }, [user, displayName]);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <Loader size="large" />
+      </div>
+    );
+  }
   return (
     <div className="content-page">
       <div className="content-top">
@@ -17,10 +47,10 @@ const Chat = () => {
             <i className="icon-arrow-left"></i>
           </button>
           <img
-            src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            alt=""
+            src={userFriend?.avatar || "/user.jpg"}
+            alt={userFriend?.displayName + " avatar"}
           />
-          <span>John Doe</span>
+          <span>{userFriend?.displayName || ""}</span>
         </div>
         <div className="content-right">
           <button type="button">

@@ -6,7 +6,7 @@ const AuthentificatedLayoutChat = ({
   children,
 }: AuthentificatedLayoutChatProps) => {
   return (
-    <div className="app">
+    <div className="app-chat">
       <main className="main-content">{children}</main>
     </div>
   );

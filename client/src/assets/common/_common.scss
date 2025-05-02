@@ -20,7 +20,7 @@ body {
 // App layout
 .app {
   min-height: 100vh;
-  padding-top: 100px;
+  padding: 6.5rem 2rem 0;
   @include flex-column;
   @include mobile {
     padding-top: 4.5rem;

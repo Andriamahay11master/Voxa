@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import firebase from "../firebase";
 import { useEffect, useState } from "react";
@@ -43,9 +43,9 @@ const Chat = () => {
     <div className="content-page">
       <div className="content-top">
         <div className="content-left">
-          <button type="button" className="btn btn-icon">
+          <Link to="/" className="btn btn-icon">
             <i className="icon-arrow-left"></i>
-          </button>
+          </Link>
           <img
             src={userFriend?.avatar || "/user.jpg"}
             alt={userFriend?.displayName + " avatar"}

@@ -43,7 +43,7 @@ const Chat = () => {
     <div className="content-page">
       <div className="content-top">
         <div className="content-left">
-          <button type="button">
+          <button type="button" className="btn btn-icon">
             <i className="icon-arrow-left"></i>
           </button>
           <img
@@ -53,11 +53,11 @@ const Chat = () => {
           <span>{userFriend?.displayName || ""}</span>
         </div>
         <div className="content-right">
-          <button type="button">
+          <button type="button" className="btn btn-icon">
             <i className="icon-video"></i>
           </button>
-          <button type="button">
-            <i className="icon-call"></i>
+          <button type="button" className="btn btn-icon">
+            <i className="icon-phone"></i>
           </button>
         </div>
       </div>

@@ -20,6 +20,7 @@ import DetailCall from "./pages/DetailCall";
 import Contact from "./pages/Contact";
 import NewContact from "./pages/NewContact";
 import ProfileFriend from "./pages/ProfileFriend";
+import AuthentificatedLayoutChat from "./components/authentificated/AuthentificatedLayoutChat";
 
 function App() {
   return (
@@ -84,9 +85,9 @@ function App() {
             path="/chat/:displayName"
             element={
               <ProtectedRoute>
-                <AuthentificatedLayout>
+                <AuthentificatedLayoutChat>
                   <Chat />
-                </AuthentificatedLayout>
+                </AuthentificatedLayoutChat>
               </ProtectedRoute>
             }
           ></Route>

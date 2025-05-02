@@ -11,7 +11,9 @@ const Chat = () => {
   const { displayName } = useParams<{ displayName: string }>();
   const [loading, setLoading] = useState(true);
   const [userFriend, setUserFriend] = useState<UserType | null>(null);
+  const [message, setMessage] = useState("");
 
+  const handleSendMessage = async () => {};
   useEffect(() => {
     if (!user) return;
     const getUserFriend = async () => {
@@ -62,9 +64,9 @@ const Chat = () => {
         </div>
       </div>
       <div className="content-form">
-        <form action="">
+        <form action="" onSubmit={handleSendMessage}>
           <input type="text" placeholder="Type a message" />
-          <button type="submit" className="btn btn-primary btn-icon">
+          <button type="submit" className="btn btn-icon">
             <i className="icon-send"></i>
           </button>
         </form>

@@ -20,6 +20,7 @@ const ListChat = () => {
         const q = query(
           listsRef,
           where("userId", "==", user.uid),
+          where("isFriend", "==", true),
           orderBy("createdAt", "desc")
         );
 

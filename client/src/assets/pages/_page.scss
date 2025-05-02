@@ -7,6 +7,7 @@
     @include flex-between;
     background: $white;
     padding: 0.5rem;
+    box-shadow: $shadow-md;
     .content-left {
       @include flex-start;
       align-items: center;
@@ -36,6 +37,11 @@
         border: none;
         &:focus {
           outline: none;
+        }
+      }
+      .btn {
+        i {
+          font-size: 1.5rem;
         }
       }
     }

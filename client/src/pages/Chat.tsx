@@ -64,7 +64,7 @@ const Chat = () => {
       <div className="content-form">
         <form action="">
           <input type="text" placeholder="Type a message" />
-          <button type="submit">
+          <button type="submit" className="btn btn-primary btn-icon">
             <i className="icon-send"></i>
           </button>
         </form>

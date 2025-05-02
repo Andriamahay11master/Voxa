@@ -18,6 +18,22 @@
       gap: 0.5rem;
     }
   }
-  .content-action {
+  .content-form {
+    position: fixed;
+    bottom: 100px;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem;
+    form {
+      @include flex-between;
+      input {
+        padding: 0.8rem 0.5rem;
+        border-radius: 2rem;
+        border: none;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
   }
 }

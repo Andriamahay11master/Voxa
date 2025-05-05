@@ -1,4 +1,5 @@
 export type UserType = {
+  uid: string;
   avatar: string;
   bio: string;
   displayName: string;

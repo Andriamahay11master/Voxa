@@ -3,11 +3,22 @@
 }
 
 .content-page {
+  & > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
   .content-top {
     @include flex-between;
     background: $white;
     padding: 0.5rem;
     box-shadow: $shadow-md;
+    position: relative;
+    z-index: 2;
     .content-left {
       @include flex-start;
       align-items: center;
@@ -29,6 +40,8 @@
     left: 0;
     width: 100%;
     padding: 0.5rem;
+    z-index: 2;
+    background-color: $white;
     form {
       @include flex-between;
       input {

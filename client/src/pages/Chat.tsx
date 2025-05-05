@@ -42,7 +42,8 @@ const Chat = () => {
     );
   }
   return (
-    <div className="content-page">
+    <div className="content-page page-chat">
+      <img src="/background.png" alt="background chat" />
       <div className="content-top">
         <div className="content-left">
           <Link to="/" className="btn btn-icon">

@@ -79,35 +79,16 @@ const Chat = () => {
               id: (querySnapshot.docs[0]?.data()?.messages?.length || 0) + 1,
               text: message.trim(),
               senderId: user.uid,
-              createdAt: serverTimestamp(),
+              createdAt: new Date().toISOString(),
               state: false,
             },
           ],
           lastMessage: message,
-          lastMessageDate: serverTimestamp(),
-          createdAt: serverTimestamp(),
+          lastMessageDate: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
           isFriend: true,
         });
       }
-
-      // Reference to chat document
-      const chatDocRef = doc(firebase.db, "chats", chatDocId);
-
-      // New message object
-      const newMessage = {
-        id: Date.now().toString(), // or use a UUID
-        text: message.trim(),
-        senderId: user.uid,
-        createdAt: serverTimestamp(),
-      };
-
-      // Update chat document with new message and last message info
-      await updateDoc(chatDocRef, {
-        messages: arrayUnion(newMessage),
-        lastMessage: newMessage.text,
-        lastMessageDate: serverTimestamp(),
-      });
-
       // Clear input
       setMessage("");
     } catch (error: any) {

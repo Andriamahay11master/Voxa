@@ -1,7 +1,7 @@
 export type MessageType = {
   id: number;
-  sender: string;
-  content: string;
-  date: string;
+  senderId: string;
+  text: string;
+  createAt: string;
   state: boolean;
 };

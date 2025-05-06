@@ -23,9 +23,29 @@ const Chat = () => {
   const [userFriend, setUserFriend] = useState<UserType | null>(null);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    if (!user) return;
+    const getUserFriend = async () => {
+      try {
+        const q = query(
+          collection(firebase.db, "users"),
+          where("displayName", "==", displayName)
+        );
+        const querySnapshot = await getDocs(q);
+        const userData = querySnapshot.docs[0].data() as UserType;
+        console.log(querySnapshot.docs[0].id);
+        setUserFriend({ ...userData, uid: querySnapshot.docs[0].id });
+      } catch (err: any) {
+        console.log(err.message || "Failed to fetch user data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getUserFriend();
+  }, [user, displayName]);
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(userFriend);
     if (!message.trim()) return; // Ignore empty messages
     if (!user || !userFriend) return;
 
@@ -39,7 +59,6 @@ const Chat = () => {
         where("userId", "==", user.uid),
         where("friendId", "==", userFriend.uid)
       );
-
       const querySnapshot = await getDocs(q);
 
       let chatDocId = "";
@@ -54,9 +73,17 @@ const Chat = () => {
           userId: user.uid,
           friendId: userFriend.uid,
           nameContact: userFriend.displayName,
-          pictureContact: userFriend.avatar || "",
-          messages: [],
-          lastMessage: "",
+          pictureContact: userFriend.avatar || "/user.jpg",
+          messages: [
+            {
+              id: (querySnapshot.docs[0]?.data()?.messages?.length || 0) + 1,
+              text: message.trim(),
+              senderId: user.uid,
+              createdAt: serverTimestamp(),
+              state: false,
+            },
+          ],
+          lastMessage: message,
           lastMessageDate: serverTimestamp(),
           createdAt: serverTimestamp(),
           isFriend: true,
@@ -87,27 +114,6 @@ const Chat = () => {
       console.error("Error sending message:", error.message);
     }
   };
-
-  useEffect(() => {
-    if (!user) return;
-    const getUserFriend = async () => {
-      try {
-        const q = query(
-          collection(firebase.db, "users"),
-          where("displayName", "==", displayName)
-        );
-        const querySnapshot = await getDocs(q);
-        const userData = querySnapshot.docs[0].data() as UserType;
-        console.log(userData);
-        setUserFriend({ ...userData, uid: querySnapshot.docs[0].id });
-      } catch (err: any) {
-        console.log(err.message || "Failed to fetch user data");
-      } finally {
-        setLoading(false);
-      }
-    };
-    getUserFriend();
-  }, [user, displayName]);
 
   if (loading) {
     return (
@@ -141,7 +147,12 @@ const Chat = () => {
       </div>
       <div className="content-form">
         <form action="" onSubmit={handleSendMessage}>
-          <input type="text" placeholder="Type a message" />
+          <input
+            type="text"
+            placeholder="Type a message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
           <button type="submit" className="btn btn-icon">
             <i className="icon-send"></i>
           </button>

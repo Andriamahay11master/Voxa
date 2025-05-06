@@ -15,6 +15,7 @@ import {
   where,
 } from "firebase/firestore";
 import { UserType } from "../models/UserType";
+import { ChatType } from "../models/ChatType";
 
 const Chat = () => {
   const { user } = useAuth();
@@ -22,6 +23,15 @@ const Chat = () => {
   const [loading, setLoading] = useState(true);
   const [userFriend, setUserFriend] = useState<UserType | null>(null);
   const [message, setMessage] = useState("");
+  const [chatCurrent, setChatCurrent] = useState<ChatType>({
+    id: "",
+    nameContact: "",
+    pictureContact: "",
+    messages: [],
+    lastMessage: "",
+    lastMessageDate: new Date(),
+    createdAt: new Date(),
+  });
 
   useEffect(() => {
     if (!user) return;
@@ -42,7 +52,25 @@ const Chat = () => {
       }
     };
     getUserFriend();
-  }, [user, displayName]);
+    const getChatCurrent = async () => {
+      try {
+        const q = query(
+          collection(firebase.db, "chats"),
+          where("userId", "==", user.uid),
+          where("friendId", "==", userFriend?.uid)
+        );
+        const querySnapshot = await getDocs(q);
+        const chatData = querySnapshot.docs[0].data() as ChatType;
+        setChatCurrent({ ...chatData, id: querySnapshot.docs[0].id });
+        console.log("chatcurrent", chatCurrent);
+      } catch (err: any) {
+        console.log(err.message || "Failed to fetch chat data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getChatCurrent();
+  }, [user, displayName, userFriend]);
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(userFriend);
@@ -124,6 +152,22 @@ const Chat = () => {
           <button type="button" className="btn btn-icon">
             <i className="icon-phone"></i>
           </button>
+        </div>
+      </div>
+      <div className="content-body">
+        <div className="content-messages">
+          {chatCurrent?.messages?.map((message) => (
+            <div
+              className={
+                message.senderId === user?.uid
+                  ? "message message-right"
+                  : "message message-left"
+              }
+              key={message.id}
+            >
+              <p>{message.text}</p>
+            </div>
+          ))}
         </div>
       </div>
       <div className="content-form">

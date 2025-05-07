@@ -4,14 +4,11 @@ import firebase from "../firebase";
 import { useEffect, useState } from "react";
 import Loader from "../components/loader/Loader";
 import {
-  arrayUnion,
   collection,
   doc,
   getDocs,
   query,
-  serverTimestamp,
   setDoc,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import { UserType } from "../models/UserType";

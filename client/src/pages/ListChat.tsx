@@ -5,6 +5,7 @@ import firebase from "../firebase";
 import { ChatType } from "../models/ChatType";
 import { useEffect, useState } from "react";
 import Loader from "../components/loader/Loader";
+import { Link } from "react-router-dom";
 
 const ListChat = () => {
   const { user } = useAuth();
@@ -75,15 +76,19 @@ const ListChat = () => {
       <div className="list-left">
         {chats.length === 0 && <p>No chats yet</p>}
         {chats.map((chat) => (
-          <div className="chat-item" key={chat.id}>
+          <Link
+            className="chat-item"
+            to={`/chat/${chat.nameContact}`}
+            key={chat.id}
+          >
             <div className="chat-picture">
               <img src={chat.pictureContact} alt={chat.pictureContact} />
             </div>
             <div className="chat-info">
-              <span>{chat.nameContact}</span>
-              <p>{chat.lastMessage}</p>
+              <span className="chat-name">{chat.nameContact}</span>
+              <p className="chat-message">{chat.lastMessage}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <div className="list-right">

@@ -38,8 +38,19 @@ const ListChat = () => {
               id: index.toString(),
             })),
             lastMessage: data.lastMessage || "",
-            lastMessageDate: data.lastMessageDate?.toDate() || new Date(),
-            createdAt: data.createdAt?.toDate() || new Date(),
+            lastMessageDate:
+              data.lastMessageDate &&
+              typeof data.lastMessageDate.toDate === "function"
+                ? data.lastMessageDate.toDate()
+                : data.lastMessageDate
+                ? new Date(data.lastMessageDate)
+                : new Date(),
+            createdAt:
+              data.createdAt && typeof data.createdAt.toDate === "function"
+                ? data.createdAt.toDate()
+                : data.createdAt
+                ? new Date(data.createdAt)
+                : new Date(),
           });
         });
         setChats(listsData);

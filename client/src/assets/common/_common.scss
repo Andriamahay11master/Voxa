@@ -23,7 +23,7 @@ body {
   padding: 6.5rem 2rem 0;
   @include flex-column;
   @include mobile {
-    padding-top: 4.5rem;
+    padding: 4.5rem 1rem 0;
   }
 }
 

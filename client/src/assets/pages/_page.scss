@@ -59,4 +59,49 @@
       }
     }
   }
+  .content-body {
+    position: relative;
+    z-index: 2;
+    .content-messages {
+      padding: 1rem 0.5rem;
+      @include flex-column;
+      gap: 0.4rem;
+    }
+    .message {
+      padding: 0.3rem;
+      border-radius: $border-radius-md;
+      display: inline-flex;
+      max-width: 80%;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0.5rem; /* Adjust vertical position of arrow */
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+      &.message-right {
+        align-self: flex-end;
+        background: $primary-color;
+        &::after {
+          border-width: 0.5rem 0 0.5rem 0.5rem; /* Triangle pointing right */
+          border-color: transparent transparent transparent $primary-color;
+          right: -0.5rem; /* Position arrow outside the bubble on the right */
+        }
+      }
+      &.message-left {
+        align-self: flex-start;
+        background: $white-f5;
+        &::after {
+          border-width: 0.5rem 0.5rem 0.5rem 0; /* Triangle pointing left */
+          border-color: transparent $white-f5 transparent transparent;
+          left: -0.5rem; /* Position arrow outside the bubble on the left */
+        }
+      }
+      p {
+        margin: 0;
+      }
+    }
+  }
 }

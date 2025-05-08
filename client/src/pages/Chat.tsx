@@ -30,6 +30,11 @@ const Chat = () => {
     createdAt: new Date(),
   });
 
+  // Generate consistent chat ID for both participants
+  const getChatId = (uid1: string, uid2: string) => {
+    return [uid1, uid2].sort().join("_");
+  };
+
   useEffect(() => {
     if (!user) return;
     const getUserFriend = async () => {
@@ -39,6 +44,9 @@ const Chat = () => {
           where("displayName", "==", displayName)
         );
         const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          throw new Error("User not found");
+        }
         const userData = querySnapshot.docs[0].data() as UserType;
         console.log(querySnapshot.docs[0].id);
         setUserFriend({ ...userData, uid: querySnapshot.docs[0].id });
@@ -49,6 +57,11 @@ const Chat = () => {
       }
     };
     getUserFriend();
+  }, [user, displayName]);
+
+  useEffect(() => {
+    if (!user || !userFriend) return;
+    const chatId = getChatId(user.uid, userFriend.uid);
     const getChatCurrent = async () => {
       try {
         const q = query(
@@ -67,7 +80,7 @@ const Chat = () => {
       }
     };
     getChatCurrent();
-  }, [user, displayName, userFriend]);
+  }, [user, userFriend]);
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(userFriend);

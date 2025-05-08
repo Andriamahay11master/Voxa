@@ -4,6 +4,7 @@ import firebase from "../firebase";
 import { useEffect, useState } from "react";
 import Loader from "../components/loader/Loader";
 import {
+  arrayUnion,
   collection,
   doc,
   getDocs,
@@ -14,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { UserType } from "../models/UserType";
 import { ChatType } from "../models/ChatType";
+import { MessageType } from "../models/MessageType";
 
 const Chat = () => {
   const { user } = useAuth();
@@ -21,15 +23,7 @@ const Chat = () => {
   const [loading, setLoading] = useState(true);
   const [userFriend, setUserFriend] = useState<UserType | null>(null);
   const [message, setMessage] = useState("");
-  const [chatCurrent, setChatCurrent] = useState<ChatType>({
-    id: "",
-    nameContact: "",
-    pictureContact: "",
-    messages: [],
-    lastMessage: "",
-    lastMessageDate: new Date(),
-    createdAt: new Date(),
-  });
+  const [chatCurrent, setChatCurrent] = useState<ChatType | null>(null);
 
   // Generate consistent chat ID for both participants
   const getChatId = (uid1: string, uid2: string) => {
@@ -89,50 +83,33 @@ const Chat = () => {
   }, [user, userFriend]);
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(userFriend);
-    if (!message.trim()) return; // Ignore empty messages
-    if (!user || !userFriend) return;
+    if (!message.trim() || !user || !userFriend || !chatCurrent) return;
 
     try {
       // Reference to chats collection
-      const chatsRef = collection(firebase.db, "chats");
+      const chatId = getChatId(user.uid, userFriend.uid);
+      const chatRef = doc(firebase.db, "chats", chatId);
 
-      // Query to find existing chat between current user and friend
-      const q = query(
-        chatsRef,
-        where("userId", "==", user.uid),
-        where("friendId", "==", userFriend.uid)
+      const newMessage: MessageType = {
+        id: (chatCurrent.messages?.length || 0) + 1,
+        text: message.trim(),
+        senderId: user.uid,
+        createdAt: new Date().toISOString(),
+        read: false,
+      };
+
+      await setDoc(
+        chatRef,
+        {
+          participants: [user.uid, userFriend.uid],
+          messages: arrayUnion(newMessage),
+          lastMessage: newMessage.text,
+          lastMessageDate: newMessage.createdAt,
+          createdAt: chatCurrent.createdAt || new Date().toISOString(),
+        },
+        { merge: true } // Merge with existing document if it exists
       );
-      const querySnapshot = await getDocs(q);
 
-      let chatDocId = "";
-      if (!querySnapshot.empty) {
-        // Chat exists
-        chatDocId = querySnapshot.docs[0].id;
-      } else {
-        // Create new chat document if not exists
-        const newChatRef = doc(chatsRef);
-        chatDocId = newChatRef.id;
-        await setDoc(newChatRef, {
-          userId: user.uid,
-          friendId: userFriend.uid,
-          nameContact: userFriend.displayName,
-          pictureContact: userFriend.avatar || "/user.jpg",
-          messages: [
-            {
-              id: (querySnapshot.docs[0]?.data()?.messages?.length || 0) + 1,
-              text: message.trim(),
-              senderId: user.uid,
-              createdAt: new Date().toISOString(),
-              state: false,
-            },
-          ],
-          lastMessage: message,
-          lastMessageDate: new Date().toISOString(),
-          createdAt: new Date().toISOString(),
-          isFriend: true,
-        });
-      }
       // Clear input
       setMessage("");
     } catch (error: any) {

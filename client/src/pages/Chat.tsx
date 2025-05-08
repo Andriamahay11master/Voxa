@@ -7,6 +7,7 @@ import {
   collection,
   doc,
   getDocs,
+  onSnapshot,
   query,
   setDoc,
   where,
@@ -62,24 +63,29 @@ const Chat = () => {
   useEffect(() => {
     if (!user || !userFriend) return;
     const chatId = getChatId(user.uid, userFriend.uid);
-    const getChatCurrent = async () => {
-      try {
-        const q = query(
-          collection(firebase.db, "chats"),
-          where("userId", "==", user.uid),
-          where("friendId", "==", userFriend?.uid)
-        );
-        const querySnapshot = await getDocs(q);
-        const chatData = querySnapshot.docs[0].data() as ChatType;
-        setChatCurrent({ ...chatData, id: querySnapshot.docs[0].id });
-        console.log("chatcurrent", chatCurrent);
-      } catch (err: any) {
-        console.log(err.message || "Failed to fetch chat data");
-      } finally {
-        setLoading(false);
+    const chatRef = doc(firebase.db, "chats", chatId);
+
+    const unsubscribe = onSnapshot(chatRef, (doc) => {
+      if (doc.exists()) {
+        const chatData = doc.data() as ChatType;
+        setChatCurrent({
+          ...chatData,
+          id: doc.id,
+          messages: chatData.messages || [],
+        });
+      } else {
+        // Create initial chat document if it doesn't exist
+        setChatCurrent({
+          id: chatId,
+          participants: [user.uid, userFriend.uid],
+          messages: [],
+          lastMessage: "",
+          lastMessageDate: new Date(),
+          createdAt: new Date(),
+        });
       }
-    };
-    getChatCurrent();
+    });
+    return () => unsubscribe();
   }, [user, userFriend]);
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

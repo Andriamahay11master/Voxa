@@ -43,7 +43,6 @@ const Chat = () => {
           throw new Error("User not found");
         }
         const userData = querySnapshot.docs[0].data() as UserType;
-        console.log(querySnapshot.docs[0].id);
         setUserFriend({ ...userData, uid: querySnapshot.docs[0].id });
       } catch (err: any) {
         console.log(err.message || "Failed to fetch user data");
@@ -72,6 +71,16 @@ const Chat = () => {
         setChatCurrent({
           id: chatId,
           participants: [user.uid, userFriend.uid],
+          usersInfo: {
+            [user.uid]: {
+              displayName: user.displayName || "",
+              avatar: user.photoURL || "/user.jpg",
+            },
+            [userFriend.uid]: {
+              displayName: userFriend.displayName,
+              avatar: userFriend.avatar || "/user.jpg",
+            },
+          },
           messages: [],
           lastMessage: "",
           lastMessageDate: new Date(),
@@ -103,6 +112,16 @@ const Chat = () => {
         {
           participants: [user.uid, userFriend.uid],
           messages: arrayUnion(newMessage),
+          usersInfo: {
+            [user.uid]: {
+              displayName: user.displayName || "",
+              avatar: user.photoURL || "/user.jpg",
+            },
+            [userFriend.uid]: {
+              displayName: userFriend.displayName,
+              avatar: userFriend.avatar || "/user.jpg",
+            },
+          },
           lastMessage: newMessage.text,
           lastMessageDate: newMessage.createdAt,
           createdAt: chatCurrent.createdAt || new Date().toISOString(),

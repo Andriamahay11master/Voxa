@@ -6,6 +6,7 @@ import {
   query,
   where,
   Timestamp,
+  onSnapshot,
 } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext";
 import firebase from "../firebase";
@@ -39,47 +40,50 @@ const ListChat = () => {
           orderBy("lastMessageDate", "desc")
         );
 
-        const querySnapshot = await getDocs(q);
-        const listsData: ChatListItem[] = [];
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const listsData: ChatListItem[] = [];
 
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
 
-          // Determine friend UID
-          const friendUid = data.participants.find(
-            (uid: string) => uid !== user.uid
-          );
+            // Determine friend UID
+            const friendUid = data.participants.find(
+              (uid: string) => uid !== user.uid
+            );
 
-          // Get friend info from usersInfo object
-          const friendInfo = data.usersInfo?.[friendUid] || {
-            displayName: "Unknown",
-            avatar: "/user.jpg",
-          };
+            // Get friend info from usersInfo object
+            const friendInfo = data.usersInfo?.[friendUid] || {
+              displayName: "Unknown",
+              avatar: "/user.jpg",
+            };
 
-          listsData.push({
-            id: doc.id,
-            participants: data.participants,
-            messages: data.messages || [],
-            lastMessage: data.lastMessage || "",
-            lastMessageDate:
-              data.lastMessageDate instanceof Timestamp
-                ? data.lastMessageDate.toDate()
-                : data.lastMessageDate
-                ? new Date(data.lastMessageDate)
-                : new Date(),
-            createdAt:
-              data.createdAt instanceof Timestamp
-                ? data.createdAt.toDate()
-                : data.createdAt
-                ? new Date(data.createdAt)
-                : new Date(),
-            friendDisplayName: friendInfo.displayName,
-            friendAvatar: friendInfo.avatar,
-            friendUid,
+            listsData.push({
+              id: doc.id,
+              participants: data.participants,
+              messages: data.messages || [],
+              lastMessage: data.lastMessage || "",
+              lastMessageDate:
+                data.lastMessageDate instanceof Timestamp
+                  ? data.lastMessageDate.toDate()
+                  : data.lastMessageDate
+                  ? new Date(data.lastMessageDate)
+                  : new Date(),
+              createdAt:
+                data.createdAt instanceof Timestamp
+                  ? data.createdAt.toDate()
+                  : data.createdAt
+                  ? new Date(data.createdAt)
+                  : new Date(),
+              friendDisplayName: friendInfo.displayName,
+              friendAvatar: friendInfo.avatar,
+              friendUid,
+            });
           });
-        });
 
-        setChats(listsData);
+          setChats(listsData);
+        });
+        // Clean up on unmount:
+        return () => unsubscribe();
       } catch (err: any) {
         setError(err.message || "Failed to fetch chat lists");
       } finally {

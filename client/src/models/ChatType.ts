@@ -3,7 +3,7 @@ import { MessageType } from "./MessageType";
 export type ChatType = {
   id: string;
   participants: string[];
-  usersInfo: MainUserType;
+  usersInfo?: MainUserType;
   messages: MessageType[];
   lastMessage: string;
   lastMessageDate: Date;

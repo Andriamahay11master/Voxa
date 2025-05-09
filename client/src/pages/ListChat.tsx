@@ -25,21 +25,6 @@ const ListChat = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Helper to get friend info from participants array and chat document
-  const getFriendInfo = (
-    participants: string[],
-    currentUserId: string,
-    chatData: any
-  ) => {
-    // The friend is the participant who is NOT the current user
-    const friendUid = participants.find((uid) => uid !== currentUserId) || "";
-    // Try to get friend info from chat data (if stored)
-    const friendDisplayName = chatData.nameContact || "";
-    const friendAvatar = chatData.pictureContact || "/user.jpg";
-
-    return { friendUid, friendDisplayName, friendAvatar };
-  };
-
   useEffect(() => {
     if (!user) return;
     const getChats = async () => {
@@ -60,12 +45,16 @@ const ListChat = () => {
         querySnapshot.forEach((doc) => {
           const data = doc.data();
 
-          // Extract friend info
-          const { friendUid, friendDisplayName, friendAvatar } = getFriendInfo(
-            data.participants,
-            user.uid,
-            data
+          // Determine friend UID
+          const friendUid = data.participants.find(
+            (uid: string) => uid !== user.uid
           );
+
+          // Get friend info from usersInfo object
+          const friendInfo = data.usersInfo?.[friendUid] || {
+            displayName: "Unknown",
+            avatar: "/user.jpg",
+          };
 
           listsData.push({
             id: doc.id,
@@ -84,8 +73,8 @@ const ListChat = () => {
                 : data.createdAt
                 ? new Date(data.createdAt)
                 : new Date(),
-            friendDisplayName,
-            friendAvatar,
+            friendDisplayName: friendInfo.displayName,
+            friendAvatar: friendInfo.avatar,
             friendUid,
           });
         });
